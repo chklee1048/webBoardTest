@@ -6,11 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardDto;
-
 import org.zerock.service.BoardService;
 
 @Controller
@@ -39,16 +40,63 @@ public class BoardController {
 //		model.addAttribute("result", "success");
 		rttr.addFlashAttribute("result", "success");
 		
-//		return "/board/success"; ÆäÀÌÁö¸¦ ´Ù¸¥ °÷À¸·Î ÀÌµ¿ÇÔÀ¸·Î¼­ µµ¹è¸¦ ¸·´Â´Ù.
+//		return "/board/success"; ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¼ï¿½ ï¿½ï¿½ï¿½è¸¦ ï¿½ï¿½ï¿½Â´ï¿½.
 		return "redirect:/board/listAll";
 	}
 	
 	@RequestMapping(value="/listAll", method=RequestMethod.GET)
 	public void listAll(Model model) throws Exception{
 		
-		
 		logger.info("list alllllllll.............");
 		model.addAttribute("list", boardService.listAll());
 	}
+	
+	@RequestMapping(value="/read", method=RequestMethod.GET)
+	public void read(@RequestParam("bno") int bno, Model model) throws Exception{
+		
+		model.addAttribute(boardService.read(bno));
+	}
+	
+	@RequestMapping(value="/remove", method=RequestMethod.POST)
+	public String remove(@RequestParam("bno") int bno, RedirectAttributes rttr) throws Exception{
+		
+		
+		logger.info("remove POST call..............");
+		boardService.remove(bno);
+		
+		rttr.addFlashAttribute("result","success");
+		
+		return "redirect:/board/listAll";
+	}
+	
+	@RequestMapping(value="/modify", method=RequestMethod.GET)
+	public void modifyGET(int bno, Model model) throws Exception{
+		
+		logger.info("modify GET call .............");
+		
+		model.addAttribute(boardService.read(bno));
+		
+	}
+	
+	@RequestMapping(value="/modify", method=RequestMethod.POST)
+	public String modifyPOST(BoardDto boardDto, RedirectAttributes rttr) throws Exception{
+		
+		logger.info("modify post call............");
+
+		boardService.modify(boardDto);
+		
+		rttr.addFlashAttribute("result","success");
+		
+		return "redirect:/board/listAll";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
