@@ -9,7 +9,7 @@
     values (seq_board.nextval, #{title},#{content},#{writer})
   </select>
   
-  <select id="read" resultType="org.zerock.domain.BoardDto">
+  <select id="read" resultType="BoardDto">
   	select 
   		bno, title, content, writer, regdate, viewcnt
 	from
@@ -26,7 +26,7 @@
   	delete from tbl_board where bno = #{bno}
   </delete>
   
-  <select id="listAll" resultType="org.zerock.domain.BoardDto">
+  <select id="listAll" resultType="BoardDto">
   	select 
   		bno, writer, title, content, regdate, viewcnt 
   	from 
@@ -35,5 +35,54 @@
 		bno > 0
 	order by bno desc, regdate desc
   </select>
+  
+  <select id="listPage" resultType="BoardDto">
+	  <![CDATA[
+	  	SELECT 
+			bno, writer, title, content, regdate, viewcnt 
+	  	FROM(
+			  SELECT 
+	        		ROWNUM AS RNUM, A.*
+	          FROM ( 
+	          		 SELECT 
+						bno, writer, title, content, regdate, viewcnt 
+					 FROM 
+						TBL_BOARD 
+					 WHERE 
+						bno > 0 
+					 ORDER BY  bno DESC, regdate DESC 
+					) A
+			  WHERE 
+				ROWNUM <= (#{page}+10)
+	      	)
+	 	WHERE 
+	 		RNUM > #{page}
+	   	]]>
+  </select>
+  
+  <select id="listCriteria" resultType="BoardDto">
+  	<![CDATA[
+	  	SELECT 
+			bno, writer, title, content, regdate, viewcnt 
+	  	FROM(
+			  SELECT 
+	        		ROWNUM AS RNUM, A.*
+	          FROM ( 
+	          		 SELECT 
+						bno, writer, title, content, regdate, viewcnt 
+					 FROM 
+						TBL_BOARD 
+					 WHERE 
+						bno > 0 
+					 ORDER BY  bno DESC, regdate DESC 
+					) A
+			  WHERE 
+				ROWNUM <= ( #{pageStart} + #{perPageNum} )
+	      	)
+	 	WHERE 
+	 		RNUM > #{pageStart}
+	   	]]>
+  </select>
+  
 </mapper>
   
