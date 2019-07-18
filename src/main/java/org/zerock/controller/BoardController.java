@@ -6,12 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardDto;
 import org.zerock.domain.Criteria;
+import org.zerock.domain.PageMaker;
 import org.zerock.service.BoardService;
 
 @Controller
@@ -40,7 +42,7 @@ public class BoardController {
 //		model.addAttribute("result", "success");
 		rttr.addFlashAttribute("result", "success");
 		
-//		return "/board/success"; �������� �ٸ� ������ �̵������μ� ���踦 ���´�.
+//		return "/board/success"; 
 		return "redirect:/board/listAll";
 	}
 	
@@ -100,9 +102,26 @@ public class BoardController {
 		logger.info("model::"+model);
 	}
 	
+	@RequestMapping(value="/listPage", method=RequestMethod.GET)
+	public void listPage(Criteria criteria, Model model) throws Exception{
+		
+		logger.info(criteria.toString());
+		
+		model.addAttribute("list", boardService.listCriteria(criteria));
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(criteria);
+		pageMaker.setTotalCount(boardService.countPaging(criteria));
+		
+		model.addAttribute("pageMaker",pageMaker);
+		
+	}
 	
-	
-	
+	@RequestMapping(value="/readPage", method=RequestMethod.GET)
+	public void read(@RequestParam("bno") int bno
+					, @ModelAttribute("cri") Criteria criteria
+					, Model model) throws Exception{
+		model.addAttribute(boardService.read(bno));
+	}
 	
 	
 	

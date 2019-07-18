@@ -60,4 +60,9 @@ public class BoardDaoImpl implements BoardDao{
 		return sqlSession.selectList(namespace+".listCriteria", criteria);
 	}
 
+	@Override
+	public int countPaging(Criteria criteria) throws Exception {
+		return sqlSession.selectOne(namespace+".countPaging", criteria);
+	}
+
 }

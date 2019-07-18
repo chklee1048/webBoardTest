@@ -45,4 +45,10 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.listCriteria(criteria);
 	}
 
+	@Override
+	public int countPaging(Criteria criteria) throws Exception {
+		
+		return boardDao.countPaging(criteria);
+	}
+
 }
