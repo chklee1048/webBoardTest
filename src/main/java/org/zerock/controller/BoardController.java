@@ -81,22 +81,24 @@ public class BoardController {
 		return "redirect:/board/listPage";
 	}
 	
-	@RequestMapping(value="/modify", method=RequestMethod.GET)
-	public void modifyGET(int bno, Model model) throws Exception{
+	@RequestMapping(value="/modifyPage", method=RequestMethod.GET)
+	public void modifyPgaeGET(int bno, @ModelAttribute("cri") Criteria criteria, Model model) throws Exception{
 		
-		logger.info("modify GET call .............");
+		logger.info("modifyPage GET call .............");
 		
 		model.addAttribute(boardService.read(bno));
 		
 	}
 	
-	@RequestMapping(value="/modify", method=RequestMethod.POST)
-	public String modifyPOST(BoardDto boardDto, RedirectAttributes rttr) throws Exception{
+	@RequestMapping(value="/modifyPage", method=RequestMethod.POST)
+	public String modifyPOST(BoardDto boardDto, Criteria criteria, RedirectAttributes rttr) throws Exception{
 		
-		logger.info("modify post call............");
+		logger.info("modifyPage post call............");
 
 		boardService.modify(boardDto);
 		
+		rttr.addAttribute("page", criteria.getPage());
+		rttr.addAttribute("perPageNum", criteria.getPerPageNum());
 		rttr.addFlashAttribute("result","success");
 		
 		return "redirect:/board/listPage";
