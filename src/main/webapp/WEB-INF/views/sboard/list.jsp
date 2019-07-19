@@ -15,7 +15,10 @@
 			<div class='box'>
 				<div class="box-header with-border">
 					<h3 class="box-title">Board List</h3>
-				</div>			
+				</div>
+				<div class='box-body'>
+					<button id='newBtn'>New Board</button>
+				</div>
 			</div>
 			<div class="box">
 				<div class="box-header with-border">
