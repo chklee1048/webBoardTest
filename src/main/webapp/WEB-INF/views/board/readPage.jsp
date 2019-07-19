@@ -45,10 +45,10 @@
 <div class="box-footer">
 	<button type="submit" class="btn btn-warning">Modify</button>
 	<button type="submit" class="btn btn-danger">REMOVE</button>
-	<button type="submit" class="btn btn-primary goListBtn">LIST ALL</button>
+	<button type="submit" class="btn btn-primary">LIST ALL</button>
 </div>
 
-<form action="form" action="modifyPage" method="post">
+<form role="form" action="modifyPage" method="post">
 	<input type="hidden" name="bno" value="${boardDto.bno }" />
 	<input type="hidden" name="page" value="${cri.page}" />
 	<input type="hidden" name="perPageNum" value="${cri.perPageNum }" />

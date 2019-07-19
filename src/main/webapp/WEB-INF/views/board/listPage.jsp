@@ -38,7 +38,7 @@
 
 							<tr>
 								<td>${boardDto.bno}</td>
-								<td><a href='/board/readPage?bno=${boardDto.bno}'>${boardDto.title}</a></td>
+								<td><a href='/board/readPage?bno=${boardDto.bno}&page=${criteria.page}&perPageNum=${criteria.perPageNum}'>${boardDto.title}</a></td>
 								<td>${boardDto.writer}</td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 										value="${boardDto.regdate}" /></td>
@@ -59,20 +59,20 @@
 
 							<c:if test="${pageMaker.prev}">
 								<li><a
-									href="listPage?page=${pageMaker.startPage - 1 }">&laquo;</a></li>
+									href="${pageMaker.startPage - 1 }">&laquo;</a></li>
 							</c:if>
 
 							<c:forEach begin="${pageMaker.startPage }"
 								end="${pageMaker.endPage }" var="idx">
 								<li
 									<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
-									<a href="listPage?page=${idx}">${idx}</a>
+									<a href="${idx}">${idx}</a>
 								</li>
 							</c:forEach>
 
 							<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 								<li><a
-									href="listPage?page=${pageMaker.endPage + 1 }">&raquo;</a></li>
+									href="${pageMaker.endPage + 1 }">&raquo;</a></li>
 							</c:if>
 
 						</ul>
@@ -97,7 +97,7 @@
 
 
 <script>
-	var result = '${msg}';
+	var result = '${result}';
 
 	if (result == 'success') {
 		alert("처리가 완료되었습니다.");

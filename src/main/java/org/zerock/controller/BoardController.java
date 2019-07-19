@@ -43,7 +43,7 @@ public class BoardController {
 		rttr.addFlashAttribute("result", "success");
 		
 //		return "/board/success"; 
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
 	}
 	
 	@RequestMapping(value="/listAll", method=RequestMethod.GET)
@@ -59,6 +59,12 @@ public class BoardController {
 		model.addAttribute(boardService.read(bno));
 	}
 	
+	@RequestMapping(value="/readPage", method=RequestMethod.GET)
+	public void read(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria criteria, Model model) throws Exception{
+		
+		model.addAttribute(boardService.read(bno));
+	}
+	
 	@RequestMapping(value="/remove", method=RequestMethod.POST)
 	public String remove(@RequestParam("bno") int bno, RedirectAttributes rttr) throws Exception{
 		
@@ -68,7 +74,7 @@ public class BoardController {
 		
 		rttr.addFlashAttribute("result","success");
 		
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
 	}
 	
 	@RequestMapping(value="/modify", method=RequestMethod.GET)
@@ -89,7 +95,7 @@ public class BoardController {
 		
 		rttr.addFlashAttribute("result","success");
 		
-		return "redirect:/board/listAll";
+		return "redirect:/board/listPage";
 	}
 	
 	@RequestMapping(value="/listCri", method=RequestMethod.GET)
@@ -115,15 +121,6 @@ public class BoardController {
 		model.addAttribute("pageMaker",pageMaker);
 		
 	}
-	
-	@RequestMapping(value="/readPage", method=RequestMethod.GET)
-	public void read(@RequestParam("bno") int bno
-					, @ModelAttribute("cri") Criteria criteria
-					, Model model) throws Exception{
-		model.addAttribute(boardService.read(bno));
-	}
-	
-	
 	
 	
 }
