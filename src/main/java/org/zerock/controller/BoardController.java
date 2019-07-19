@@ -63,15 +63,19 @@ public class BoardController {
 	public void read(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria criteria, Model model) throws Exception{
 		
 		model.addAttribute(boardService.read(bno));
+		
+		logger.info("readPage model value:::"+model.toString());
 	}
 	
-	@RequestMapping(value="/remove", method=RequestMethod.POST)
-	public String remove(@RequestParam("bno") int bno, RedirectAttributes rttr) throws Exception{
+	@RequestMapping(value="/removePage", method=RequestMethod.POST)
+	public String removePage(@RequestParam("bno") int bno, Criteria criteria, RedirectAttributes rttr) throws Exception{
 		
 		
-		logger.info("remove POST call..............");
+		logger.info("removePage POST call..............");
 		boardService.remove(bno);
 		
+		rttr.addAttribute("page", criteria.getPage());
+		rttr.addAttribute("perPageNum", criteria.getPerPageNum());
 		rttr.addFlashAttribute("result","success");
 		
 		return "redirect:/board/listPage";

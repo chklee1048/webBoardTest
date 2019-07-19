@@ -48,7 +48,7 @@
 	<button type="submit" class="btn btn-primary">LIST ALL</button>
 </div>
 
-<form role="form" action="modifyPage" method="post">
+<form role="form" method="post">
 	<input type="hidden" name="bno" value="${boardDto.bno }" />
 	<input type="hidden" name="page" value="${cri.page}" />
 	<input type="hidden" name="perPageNum" value="${cri.perPageNum }" />
@@ -67,18 +67,18 @@
 			formObj.attr("method", "get");		
 			formObj.submit();
 		});
-		
+
 		$(".btn-danger").on("click", function(){
-			formObj.attr("action", "/board/remove");
+			formObj.attr("action", "/board/removePage");
 			formObj.submit();
 		});
-		
+
 		$(".btn-primary").on("click", function(){
 			formObj.attr("method", "get");		
 			formObj.attr("action", "/board/listPage");
 			formObj.submit();
 		});
-		
+
 	});
 
 </script>
